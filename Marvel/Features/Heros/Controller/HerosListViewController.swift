@@ -7,13 +7,21 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HerosListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+}
 
-
+extension HerosListViewController: HerosListViewModelDelegate {
+    func onSuccess() {
+        
+    }
+    
+    func onFailure(error: Error) {
+        
+    }
 }
 
