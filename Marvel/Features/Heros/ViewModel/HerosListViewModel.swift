@@ -23,7 +23,7 @@ class HerosListViewModel {
     }
     
     func loadHeros() {
-        service.fetchHeros(from: "") { result in
+        service.fetchHeros(from: "/v1/public/characters") { result in
             switch result{
             case .success(let heros):
                 self.heros = heros

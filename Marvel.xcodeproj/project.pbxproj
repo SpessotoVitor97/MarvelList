@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D64178527B8451F005B22DC /* HerosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D64178427B8451F005B22DC /* HerosCell.swift */; };
+		2D64178727B85385005B22DC /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D64178627B85385005B22DC /* BaseModel.swift */; };
+		2D64178927B85394005B22DC /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D64178827B85394005B22DC /* DataModel.swift */; };
 		2D90DAA327B5E66200927A89 /* ThumbnailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90DAA227B5E66200927A89 /* ThumbnailModel.swift */; };
 		2D90DAA527B5E6D900927A89 /* CollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90DAA427B5E6D900927A89 /* CollectionModel.swift */; };
 		2D90DAA727B5E6FD00927A89 /* ItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90DAA627B5E6FD00927A89 /* ItemsModel.swift */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D64178427B8451F005B22DC /* HerosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HerosCell.swift; sourceTree = "<group>"; };
+		2D64178627B85385005B22DC /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		2D64178827B85394005B22DC /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		2D90DAA227B5E66200927A89 /* ThumbnailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailModel.swift; sourceTree = "<group>"; };
 		2D90DAA427B5E6D900927A89 /* CollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionModel.swift; sourceTree = "<group>"; };
 		2D90DAA627B5E6FD00927A89 /* ItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsModel.swift; sourceTree = "<group>"; };
@@ -53,9 +59,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D64178227B844DA005B22DC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2D64178327B844ED005B22DC /* Cell */,
+				2D90DAAB27B5EB7400927A89 /* Controller */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2D64178327B844ED005B22DC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				2D64178427B8451F005B22DC /* HerosCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		2D90DAAA27B5E82500927A89 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2D64178627B85385005B22DC /* BaseModel.swift */,
+				2D64178827B85394005B22DC /* DataModel.swift */,
 				2DF7B84927B42D8C0011A635 /* HerosModel.swift */,
 				2D90DAA227B5E66200927A89 /* ThumbnailModel.swift */,
 				2D90DAA827B5E72000927A89 /* UrlModel.swift */,
@@ -103,7 +128,7 @@
 				2D90DAB027B5ED7D00927A89 /* Service */,
 				2D90DAAA27B5E82500927A89 /* Models */,
 				2D90DAAD27B5EC3B00927A89 /* ViewModel */,
-				2D90DAAB27B5EB7400927A89 /* Controller */,
+				2D64178227B844DA005B22DC /* Views */,
 			);
 			path = Heros;
 			sourceTree = "<group>";
@@ -253,10 +278,13 @@
 				2DCAED3627B1FA9C00E36C7F /* HerosListViewController.swift in Sources */,
 				2D90DAB627B5F18300927A89 /* MarvelService.swift in Sources */,
 				2D90DAA327B5E66200927A89 /* ThumbnailModel.swift in Sources */,
+				2D64178727B85385005B22DC /* BaseModel.swift in Sources */,
 				2DF7B84A27B42D8C0011A635 /* HerosModel.swift in Sources */,
 				2D90DAA727B5E6FD00927A89 /* ItemsModel.swift in Sources */,
 				2DCAED3227B1FA9C00E36C7F /* AppDelegate.swift in Sources */,
+				2D64178927B85394005B22DC /* DataModel.swift in Sources */,
 				2D90DAA927B5E72000927A89 /* UrlModel.swift in Sources */,
+				2D64178527B8451F005B22DC /* HerosCell.swift in Sources */,
 				2DCAED3427B1FA9C00E36C7F /* SceneDelegate.swift in Sources */,
 				2D90DAB227B5ED8900927A89 /* HerosService.swift in Sources */,
 				2D90DAAF27B5EC7000927A89 /* HerosListViewModel.swift in Sources */,
