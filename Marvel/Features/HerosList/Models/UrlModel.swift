@@ -8,7 +8,13 @@
 import Foundation
 
 struct UrlModel: Codable {
-
-    let type: String
+    let type: URLType
     let url: String
 }
+
+enum URLType: String, Codable {
+    case comiclink = "comiclink"
+    case detail = "detail"
+    case wiki = "wiki"
+}
+
