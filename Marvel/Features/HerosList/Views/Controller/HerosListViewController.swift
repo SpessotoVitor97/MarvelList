@@ -16,6 +16,10 @@ class PremiumIds {
 }
 
 class HerosListViewController: UIViewController {
+    
+    //*************************************************
+    // MARK: - Properties
+    //*************************************************
     lazy var activity: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView()
         activity.hidesWhenStopped = true
@@ -37,6 +41,9 @@ class HerosListViewController: UIViewController {
     
     var viewModel: HerosListViewModel!
     
+    //*************************************************
+    // MARK: - Initializers
+    //*************************************************
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -45,6 +52,9 @@ class HerosListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //*************************************************
+    // MARK: - Lifecycle
+    //*************************************************
     override func loadView() {
         let view = UIView()
         view.backgroundColor = .white
@@ -58,13 +68,15 @@ class HerosListViewController: UIViewController {
         viewModel.delegate = self
         
         configureViews()
-        navigationController?.title = "Lista de contatos"
+        navigationController?.title = "Lista de Heróis"
         
         viewModel.loadHeros()
     }
     
-    func configureViews() {
-        view.backgroundColor = .red
+    //*************************************************
+    // MARK: - Private methods
+    //*************************************************
+    private func configureViews() {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -74,22 +86,35 @@ class HerosListViewController: UIViewController {
         ])
     }
     
-    func isPremium(hero: HeroModel) -> Bool {
+    private func isPremium(hero: HeroModel) -> Bool {
         return PremiumIds.isPremium(id: hero.id)
     }
 }
 
+//*************************************************
+// MARK: - HerosListViewModelDelegate
+//*************************************************
 extension HerosListViewController: HerosListViewModelDelegate {
     func onSuccess() {
-        print("onSucces")
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.activity.stopAnimating()
+        }
     }
     
     func onFailure(error: Error) {
-        print(error)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Ops, ocorreu um erro", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
     }
 }
 
+//*************************************************
+// MARK: - UITableViewDataSource, UITableViewDelegate
+//*************************************************
 extension HerosListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getTotalHeros()
@@ -102,20 +127,7 @@ extension HerosListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let hero = viewModel.getHero(at: indexPath)
         cell.fullnameLabel.text = hero.name
-        
-//        DispatchQueue.global().async {
-//            if let urlPhoto = URL(string: hero.thumbnail) {
-//                do {
-//                    let data = try Data(contentsOf: urlPhoto)
-//                    let image = UIImage(data: data)
-//                    DispatchQueue.main.async {
-//                        cell.contactImage.image = image
-//                    }
-//                } catch {
-//                    print(error)
-//                }
-//            }
-//        }
+        cell.contactImage.downloadImage(withURL: hero.thumbnail.fullPath)
         
         return cell
     }

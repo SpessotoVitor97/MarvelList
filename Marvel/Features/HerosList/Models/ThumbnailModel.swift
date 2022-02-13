@@ -22,9 +22,8 @@ enum Extension: String, Codable {
     case jpg = "jpg"
 }
 
-
-//extension ThumbnailModel {
-//    var fullPath: String {
-//        return self.path + "." + self.extensionField
-//    }
-//}
+extension ThumbnailModel {
+    var fullPath: String {
+        return self.path + "." + self.thumbnailExtension.rawValue
+    }
+}

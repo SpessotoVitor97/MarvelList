@@ -60,5 +60,4 @@ class HerosCell: UITableViewCell {
         fullnameLabel.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         fullnameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
-
 }
