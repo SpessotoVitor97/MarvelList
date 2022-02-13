@@ -57,19 +57,6 @@ class MarvelService: MarvelServiceProtocol {
         }
         task.resume()
     }
-        
-//        Alamofire.request(environment.url + url, method: method, parameters: params, headers: headers)
-//        .validate()
-//        .responseJSON { (response) in
-//            switch response.result {
-//            case .success:
-//                guard let value = response.data as? T else { return }
-//                completion(.success(value))
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
-//    }
     
     func createRequest(from url: URL) -> URLRequest {
         

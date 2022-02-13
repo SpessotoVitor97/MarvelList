@@ -8,18 +8,7 @@
 import UIKit
 
 class HerosCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-    }
-    
-    lazy var contactImage: UIImageView = {
+    lazy var heroImage: UIImageView = {
         let imgView = UIImageView()
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.contentMode = .scaleAspectFit
@@ -27,7 +16,7 @@ class HerosCell: UITableViewCell {
         return imgView
     }()
     
-    lazy var fullnameLabel: UILabel = {
+    lazy var heroName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,17 +36,17 @@ class HerosCell: UITableViewCell {
     }
     
     func configureViews() {
-        contentView.addSubview(contactImage)
-        contentView.addSubview(fullnameLabel)
+        contentView.addSubview(heroImage)
+        contentView.addSubview(heroName)
         
-        contactImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
-        contactImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        contactImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        contactImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        heroImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
+        heroImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        heroImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        heroImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
-        fullnameLabel.leadingAnchor.constraint(equalTo: contactImage.trailingAnchor, constant: 16).isActive = true
-        fullnameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
-        fullnameLabel.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        fullnameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        heroName.leadingAnchor.constraint(equalTo: heroImage.trailingAnchor, constant: 16).isActive = true
+        heroName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        heroName.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        heroName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
 }
