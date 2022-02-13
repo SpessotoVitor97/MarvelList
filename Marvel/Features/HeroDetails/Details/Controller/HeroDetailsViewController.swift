@@ -42,10 +42,21 @@ class HeroDetailsViewController: UIViewController {
         return textView
     }()
     
+    lazy var activity: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.hidesWhenStopped = true
+        activity.startAnimating()
+        return activity
+    }()
+    
     lazy var heroComics: UICollectionView = {
         let collection = UICollectionView()
         collection.contentMode = .scaleToFill
         collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.delegate = self
+        collection.dataSource = self
+        collection.backgroundView = activity
+        collection.register(HeroComicsCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: HeroComicsCollectionViewCell.self))
         return collection
     }()
     
@@ -76,13 +87,7 @@ class HeroDetailsViewController: UIViewController {
     
     func configure() {
         addSubviews()
-        configureCollectionView()
         configureHeroInformation()
-    }
-    
-    func configureCollectionView() {
-        heroComics.delegate = self
-        heroComics.dataSource = self
     }
     
     func configureHeroInformation() {
@@ -96,7 +101,7 @@ class HeroDetailsViewController: UIViewController {
         self.view.addSubview(heroImage)
         self.view.addSubview(heroName)
         self.view.addSubview(heroDescription)
-//        self.view.addSubview(heroComics)
+        self.view.addSubview(heroComics)
         
         let guide = view.safeAreaLayoutGuide
         
@@ -115,10 +120,10 @@ class HeroDetailsViewController: UIViewController {
         heroDescription.heightAnchor.constraint(equalToConstant: 91).isActive = true
         heroDescription.widthAnchor.constraint(equalTo: guide.widthAnchor).isActive = true
         
-//        heroComics.topAnchor.constraint(equalTo: heroDescription.bottomAnchor, constant: 8).isActive = true
-//        heroComics.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
-//        heroComics.heightAnchor.constraint(equalToConstant: 350).isActive = true
-//        heroComics.widthAnchor.constraint(equalTo: guide.widthAnchor).isActive = true
+        heroComics.topAnchor.constraint(equalTo: heroDescription.bottomAnchor, constant: 8).isActive = true
+        heroComics.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
+        heroComics.heightAnchor.constraint(equalToConstant: 363).isActive = true
+        heroComics.widthAnchor.constraint(equalTo: guide.widthAnchor).isActive = true
     }
 }
 
@@ -128,7 +133,10 @@ extension HeroDetailsViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HeroComicsCollectionViewCell.self), for: indexPath) as! HeroComicsCollectionViewCell
+        cell.configure()
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
