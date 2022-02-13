@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct ComicsModel: Codable {
+struct CollectionModel: Codable {
+
     let available: Int
     let collectionURI: String
-    let items: [ComicsItemModel
-    ]
+    let items: [ItemsModel]
     let returned: Int
 }

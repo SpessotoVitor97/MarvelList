@@ -16,7 +16,6 @@ class HerosListViewModel {
     private let service: HerosService
     
     var heros = [HeroModel]()
-    
     weak var delegate: HerosListViewModelDelegate?
     
     init(service: HerosService) {
@@ -24,7 +23,7 @@ class HerosListViewModel {
     }
     
     func loadHeros() {
-        service.fetchHeros(from: "/v1/public/characters") { result in
+        service.fetchHeros(from: "") { result in
             switch result{
             case .success(let heros):
                 self.heros = heros

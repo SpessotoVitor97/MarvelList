@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct ComicsItemModel: Codable {
+struct ItemsModel: Codable {
+
     let resourceURI: String
     let name: String
 }
