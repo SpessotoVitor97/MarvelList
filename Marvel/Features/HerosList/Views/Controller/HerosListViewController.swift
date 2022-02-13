@@ -7,14 +7,6 @@
 
 import UIKit
 
-class PremiumIds {
-    static let premium = [10, 11, 12, 13]
-    
-    static func isPremium(id: Int) -> Bool {
-        return premium.contains(id)
-    }
-}
-
 class HerosListViewController: UIViewController {
     
     //*************************************************
@@ -85,10 +77,6 @@ class HerosListViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
     }
-    
-    private func isPremium(hero: HeroModel) -> Bool {
-        return PremiumIds.isPremium(id: hero.id)
-    }
 }
 
 //*************************************************
@@ -126,8 +114,8 @@ extension HerosListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         let hero = viewModel.getHero(at: indexPath)
-        cell.fullnameLabel.text = hero.name
-        cell.contactImage.downloadImage(withURL: hero.thumbnail.fullPath)
+        cell.heroName.text = hero.name
+        cell.heroImage.downloadImage(withURL: hero.thumbnail.fullPath)
         
         return cell
     }
@@ -135,16 +123,10 @@ extension HerosListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let hero = viewModel.getHero(at: indexPath)
         
-        guard isPremium(hero: hero) else {
-            let alert = UIAlertController(title: "Você tocou em", message: "\(hero.name)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true)
-            return
-        }
+        let heroDetailsViewModel = HeroDetailsViewModel(for: hero)
+        let heroDetailsViewController = HeroDetailsViewController(viewModel: heroDetailsViewModel)
         
-        let alert = UIAlertController(title: "Atenção", message:"Você tocou no contato sorteado", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
+        self.navigationController?.pushViewController(heroDetailsViewController, animated: true)
     }
 }
 
