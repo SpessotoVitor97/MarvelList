@@ -14,9 +14,9 @@ struct HeroModel: Codable {
     let modified: String
     let thumbnail: ThumbnailModel
     let resourceURI: String
-    let comics: CollectionModel?
-    let series: CollectionModel?
-    let stories: CollectionModel?
-    let events: CollectionModel?
+    let comics: ComicsModel
+    let series: ComicsModel
+    let stories: StoriesModel
+    let events: ComicsModel
     let urls: [UrlModel]
 }

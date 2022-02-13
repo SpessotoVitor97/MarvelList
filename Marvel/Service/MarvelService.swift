@@ -12,10 +12,10 @@ protocol MarvelServiceProtocol {
     var defaultUrl: String { get }
     var apiKeys: [String: String] { get }
     
-    func request<T: Codable>(url: String,
-                    parameters: [String: String],
-                    headers: [String: String]?,
-                    completion: @escaping (Result<T, Error>) -> Void)
+    func request(url: String,
+                 parameters: [String: String],
+                 headers: [String: String]?,
+                 completion: @escaping (Result<BaseModel, Error>) -> Void)
 }
 
 class MarvelService: MarvelServiceProtocol {
@@ -23,10 +23,10 @@ class MarvelService: MarvelServiceProtocol {
     var apiKeys: [String : String] = ["publicKey": "3f361c79dee32e33e15872820eb214d1",
                                       "privateKey": "3172e3d644d18d381cef2b55313d43dc7020de0e"]
     
-    func request<T: Codable>(url: String,
-                             parameters: [String: String] = [:],
-                             headers: [String: String]? = nil,
-                             completion: @escaping (Result<T, Error>) -> Void) {
+    func request(url: String,
+                 parameters: [String: String] = [:],
+                 headers: [String: String]? = nil,
+                 completion: @escaping (Result<BaseModel, Error>) -> Void) {
         
         guard let url = URL(string: defaultUrl + url) else {
             completion(.failure(CustomError.malformedURL))
@@ -47,13 +47,10 @@ class MarvelService: MarvelServiceProtocol {
                 return completion(.failure(CustomError.apiError(errorMsg.localizedDescription)))
             }
             
-            let decoded = try! JSONSerialization.jsonObject(with: jsonData, options: .fragmentsAllowed)
-            print(decoded)
-            
             do {
                 let decoder = JSONDecoder()
                 let decoded = try decoder.decode(BaseModel.self, from: jsonData)
-//                completion(.success(decoded))
+                completion(.success(decoded))
             } catch let error {
                 completion(.failure(CustomError.parseFailed(error)))
             }
@@ -93,8 +90,6 @@ class MarvelService: MarvelServiceProtocol {
         urlComponents?.queryItems = defaultParams.map({ (key, value) in
             URLQueryItem(name: key, value: value)
         })
-        
-        print(urlComponents?.queryItems)
         
         let request = URLRequest(url: (urlComponents?.url)!)
         

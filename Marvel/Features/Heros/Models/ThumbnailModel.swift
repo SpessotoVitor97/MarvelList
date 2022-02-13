@@ -9,7 +9,17 @@ import Foundation
 
 struct ThumbnailModel: Codable {
     let path: String
-    let extensionField: String
+    let thumbnailExtension: Extension
+
+    enum CodingKeys: String, CodingKey {
+        case path
+        case thumbnailExtension = "extension"
+    }
+}
+
+enum Extension: String, Codable {
+    case gif = "gif"
+    case jpg = "jpg"
 }
 
 

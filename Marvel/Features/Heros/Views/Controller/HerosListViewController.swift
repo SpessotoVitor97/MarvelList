@@ -82,6 +82,7 @@ class HerosListViewController: UIViewController {
 extension HerosListViewController: HerosListViewModelDelegate {
     func onSuccess() {
         print("onSucces")
+        tableView.reloadData()
     }
     
     func onFailure(error: Error) {

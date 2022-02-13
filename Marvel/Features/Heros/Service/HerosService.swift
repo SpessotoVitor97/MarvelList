@@ -8,7 +8,7 @@
 import Foundation
 
 protocol HerosServiceProtocol {
-    func fetchHeros(from url: String, completion: @escaping (Result<[HeroModel], Error>) -> Void)
+    func fetchHeros(from url: String, completion: @escaping (Result<BaseModel, Error>) -> Void)
 }
 
 enum CustomError: Error {
@@ -19,7 +19,7 @@ enum CustomError: Error {
 }
 
 class HerosService: HerosServiceProtocol {
-    func fetchHeros(from url: String, completion: @escaping (Result<[HeroModel], Error>) -> Void) {
+    func fetchHeros(from url: String, completion: @escaping (Result<BaseModel, Error>) -> Void) {
         let marvelService = MarvelService()
         
         marvelService.request(url: url, completion: completion)
