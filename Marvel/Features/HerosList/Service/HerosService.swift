@@ -11,13 +11,6 @@ protocol HerosServiceProtocol {
     func fetchHeros(from url: String, completion: @escaping (Result<[HeroModel], Error>) -> Void)
 }
 
-enum CustomError: Error {
-    case malformedURL
-    case invalidResponse
-    case apiError(String)
-    case parseFailed(Error)
-}
-
 class HerosService: HerosServiceProtocol {
     func fetchHeros(from url: String, completion: @escaping (Result<[HeroModel], Error>) -> Void) {
         let marvelService = MarvelService()
@@ -31,9 +24,5 @@ class HerosService: HerosServiceProtocol {
                 completion(.failure(error))
             }
         }
-    }
-    
-    func fetch(hero: String, from url: String, completion: @escaping (Result<[HeroModel], Error>) -> Void) {
-        
     }
 }

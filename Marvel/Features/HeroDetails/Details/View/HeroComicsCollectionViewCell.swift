@@ -37,22 +37,25 @@ class HeroComicsCollectionViewCell: UICollectionViewCell {
         comicName.text = nil
     }
     
-    func configure(for hero: HeroComicsModel) {
-        
+    func configure(for hero: HeroComicsViewModel) {
+        comicImage.downloadImage(withURL: hero.comicImage!)
+        comicName.text = hero.comicTitle
     }
     
     private func configureViews() {
         contentView.addSubview(comicImage)
         contentView.addSubview(comicName)
         
-        comicImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        comicImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        comicImage.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
-        comicImage.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        
-        comicName.leadingAnchor.constraint(equalTo: comicImage.trailingAnchor, constant: 16).isActive = true
-        comicName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
-        comicName.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        comicName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            comicImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            comicImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            comicImage.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            comicImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            
+            comicName.leadingAnchor.constraint(equalTo: comicImage.trailingAnchor, constant: 16),
+            comicName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            comicName.topAnchor.constraint(equalTo: contentView.topAnchor),
+            comicName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
 }

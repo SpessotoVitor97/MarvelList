@@ -36,9 +36,10 @@ class HeroDetailsViewController: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isEditable = false
         textView.isSelectable = false
-        textView.textAlignment = .left
+        textView.textAlignment = .justified
         textView.textColor = view.backgroundColor == .darkText ? .white : .black
         textView.backgroundColor = .systemBackground
+        textView.font = .systemFont(ofSize: 19, weight: .light)
         return textView
     }()
     
@@ -50,14 +51,17 @@ class HeroDetailsViewController: UIViewController {
     }()
     
     lazy var heroComics: UICollectionView = {
-        let collection = UICollectionView()
+        let collection = UICollectionView(frame: self.view.bounds, collectionViewLayout: UICollectionViewLayout())
         collection.contentMode = .scaleToFill
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.delegate = self
-        collection.dataSource = self
         collection.backgroundView = activity
         collection.register(HeroComicsCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: HeroComicsCollectionViewCell.self))
         return collection
+    }()
+    
+    lazy var heroComicsContainerView: UIView = {
+        let container = UIView()
+        return container
     }()
     
     var viewModel: HeroDetailsViewModel
@@ -88,6 +92,12 @@ class HeroDetailsViewController: UIViewController {
     func configure() {
         addSubviews()
         configureHeroInformation()
+        configureComicsCollection()
+    }
+    
+    func configureComicsCollection() {
+        heroComics.delegate = self
+        heroComics.dataSource = self
     }
     
     func configureHeroInformation() {
@@ -105,42 +115,49 @@ class HeroDetailsViewController: UIViewController {
         
         let guide = view.safeAreaLayoutGuide
         
-        heroImage.topAnchor.constraint(equalTo: guide.topAnchor).isActive = true
-        heroImage.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
-        heroImage.heightAnchor.constraint(equalToConstant: 331).isActive = true
-        heroImage.widthAnchor.constraint(equalTo: guide.widthAnchor).isActive = true
-        
-        heroName.topAnchor.constraint(equalTo: heroImage.bottomAnchor,constant: 8).isActive = true
-        heroName.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 8).isActive = true
-        heroName.heightAnchor.constraint(equalToConstant: 21).isActive = true
-        heroName.widthAnchor.constraint(equalTo: guide.widthAnchor).isActive = true
-        
-        heroDescription.topAnchor.constraint(equalTo: heroName.bottomAnchor, constant: 8).isActive = true
-        heroDescription.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
-        heroDescription.heightAnchor.constraint(equalToConstant: 91).isActive = true
-        heroDescription.widthAnchor.constraint(equalTo: guide.widthAnchor).isActive = true
-        
-        heroComics.topAnchor.constraint(equalTo: heroDescription.bottomAnchor, constant: 8).isActive = true
-        heroComics.leadingAnchor.constraint(equalTo: guide.leadingAnchor).isActive = true
-        heroComics.heightAnchor.constraint(equalToConstant: 363).isActive = true
-        heroComics.widthAnchor.constraint(equalTo: guide.widthAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            heroImage.topAnchor.constraint(equalTo: guide.topAnchor),
+            heroImage.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            heroImage.heightAnchor.constraint(equalToConstant: 331),
+            heroImage.widthAnchor.constraint(equalTo: guide.widthAnchor),
+            
+            heroName.topAnchor.constraint(equalTo: heroImage.bottomAnchor,constant: 8),
+            heroName.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 8),
+            heroName.heightAnchor.constraint(equalToConstant: 21),
+            heroName.widthAnchor.constraint(equalTo: guide.widthAnchor),
+            
+            heroDescription.topAnchor.constraint(equalTo: heroName.bottomAnchor, constant: 8),
+            heroDescription.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            heroDescription.heightAnchor.constraint(equalToConstant: 91),
+            heroDescription.widthAnchor.constraint(equalTo: guide.widthAnchor),
+            
+            heroComics.topAnchor.constraint(equalTo: heroDescription.bottomAnchor, constant: 8),
+            heroComics.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            heroComics.heightAnchor.constraint(equalToConstant: 363),
+            heroComics.widthAnchor.constraint(equalTo: guide.widthAnchor)
+        ])
     }
 }
 
 extension HeroDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.hero.comics.available
+        return viewModel.getTotalComics()
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HeroComicsCollectionViewCell.self), for: indexPath) as! HeroComicsCollectionViewCell
-        cell.configure()
-        
+        let heroComics = viewModel.hero.comics.items[indexPath.item]
+        let heroComicsViewModel = HeroComicsViewModel(comicTitle: heroComics.name, comicImage: heroComics.resourceURI)
+        cell.configure(for: heroComicsViewModel)
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("User selected \(indexPath.row)")
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
 }
 
@@ -148,11 +165,11 @@ extension HeroDetailsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (self.view.frame.width - 16)/2.3 - 4, height: collectionView.frame.height)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }

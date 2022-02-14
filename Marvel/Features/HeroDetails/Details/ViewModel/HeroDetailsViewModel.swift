@@ -6,11 +6,17 @@
 //
 
 import Foundation
+import UIKit
 
 class HeroDetailsViewModel {
     var hero: HeroModel
     
     init(for hero: HeroModel) {
         self.hero = hero
+    }
+    
+    func getTotalComics() -> Int {
+        let total = hero.comics.items.count
+        return total
     }
 }

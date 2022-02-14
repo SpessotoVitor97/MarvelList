@@ -124,6 +124,8 @@ extension HerosListViewController: UITableViewDataSource, UITableViewDelegate {
         let heroDetailsViewModel = HeroDetailsViewModel(for: hero)
         let heroDetailsViewController = HeroDetailsViewController(viewModel: heroDetailsViewModel)
         
+        tableView.cellForRow(at: indexPath)?.isSelected = false
+        
         self.navigationController?.pushViewController(heroDetailsViewController, animated: true)
     }
 }
