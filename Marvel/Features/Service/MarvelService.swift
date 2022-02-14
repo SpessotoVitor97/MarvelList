@@ -8,10 +8,7 @@
 import Foundation
 import CryptoKit
 
-protocol MarvelServiceProtocol {
-    var defaultUrl: String { get }
-    var apiKeys: [String: String] { get }
-    
+protocol MarvelServiceProtocol {    
     func request(url: String,
                  parameters: [String: String],
                  headers: [String: String]?,
@@ -19,8 +16,8 @@ protocol MarvelServiceProtocol {
 }
 
 class MarvelService: MarvelServiceProtocol {
-    var defaultUrl: String = "http://gateway.marvel.com/"
-    var apiKeys: [String : String] = ["publicKey": "3f361c79dee32e33e15872820eb214d1",
+    private var defaultUrl: String = "http://gateway.marvel.com/"
+    private var apiKeys: [String : String] = ["publicKey": "3f361c79dee32e33e15872820eb214d1",
                                       "privateKey": "3172e3d644d18d381cef2b55313d43dc7020de0e"]
     
     func request(url: String,
@@ -58,7 +55,7 @@ class MarvelService: MarvelServiceProtocol {
         task.resume()
     }
     
-    func createRequest(from url: URL) -> URLRequest {
+    private func createRequest(from url: URL) -> URLRequest {
         
         var urlComponents = URLComponents(string: url.absoluteString)
         

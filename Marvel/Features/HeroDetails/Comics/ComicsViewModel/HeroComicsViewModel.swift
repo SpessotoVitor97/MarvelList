@@ -7,6 +7,13 @@
 
 import Foundation
 
-class HerComicsViewModel {
+class HeroComicsViewModel {
     
+    var comicTitle: String?
+    var comicImage: String?
+    
+    init(comicTitle: String, comicImage: String) {
+        self.comicTitle = comicTitle
+        self.comicImage = comicImage
+    }
 }

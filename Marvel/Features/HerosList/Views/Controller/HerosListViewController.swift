@@ -109,9 +109,7 @@ extension HerosListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HerosCell.self), for: indexPath) as? HerosCell else {
-            return UITableViewCell()
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HerosCell.self), for: indexPath) as! HerosCell
         
         let hero = viewModel.getHero(at: indexPath)
         cell.heroName.text = hero.name
@@ -125,6 +123,8 @@ extension HerosListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let heroDetailsViewModel = HeroDetailsViewModel(for: hero)
         let heroDetailsViewController = HeroDetailsViewController(viewModel: heroDetailsViewModel)
+        
+        tableView.cellForRow(at: indexPath)?.isSelected = false
         
         self.navigationController?.pushViewController(heroDetailsViewController, animated: true)
     }
